@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { TextField, Button, Switch, FormControlLabel, Paper, Typography, Box, Alert } from '@mui/material';
-import { Log } from '../../../src/client';
+import { Log } from "../../../../src/client";
 import { notificationApi } from '../api';
 
 export const NotificationForm = ({ onCreated }: { onCreated: (n: any) => void }) => {

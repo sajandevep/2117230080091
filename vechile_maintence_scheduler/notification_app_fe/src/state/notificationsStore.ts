@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { Log } from '../../../src/client';
+// This file is in src/state, so it needs to go up 3 levels to the root src
+import { Log } from "../../../../src/client";
 
 export interface NotificationItem {
   id: string;

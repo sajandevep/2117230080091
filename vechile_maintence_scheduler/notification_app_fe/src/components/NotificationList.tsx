@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { List, ListItem, ListItemText, Paper, Typography, Chip, Divider } from '@mui/material';
-import { Log } from '../../../src/client';
+import { Log } from "../../../../src/client";
 
 export const NotificationList = ({ items }: { items: any[] }) => {
   useEffect(() => {

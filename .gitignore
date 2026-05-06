@@ -1,8 +1,31 @@
+# Node Modules
+**/node_modules/
+vechile_maintence_scheduler/notification_app_fe/node_modules/
+
+# Environment Variables (Security)
+# This prevents leaking your access tokens
 .env
-/essentials
-node_modules
-dist
-.env
+vechile_maintence_scheduler/notification_app_fe/.env
+
+# Build Outputs
+dist/
+vechile_maintence_scheduler/notification_app_fe/dist/
+
+# OS Metadata
 .DS_Store
+Thumbs.db
+
+# Logs
 *.log
-.gitignore
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# IDE / Editor folders
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Local essentials or temp folders
+/essentials/

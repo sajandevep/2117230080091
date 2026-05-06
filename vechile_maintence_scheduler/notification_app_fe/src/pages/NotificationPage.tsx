@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import { Container, Grid, Typography, Box } from '@mui/material';
-import { NotificationForm } from '../components/Notification';
-import { NotificationList } from '../components/NotificationList';
-import { useNotificationStore } from '../state/notificationStore';
-import { Log } from '../../../src/client';
+import { NotificationForm } from "../components/NotificationForm";
+import { NotificationList } from "../components/NotificationList";
+import { useNotificationStore } from "../state/notificationsStore";
+import { Log } from "../../../../src/client";
 
 export const NotificationPage = () => {
   const { notifications, addNotification } = useNotificationStore();

@@ -1,9 +1,14 @@
-import { initLogger } from '../../logging_middleware/src';
+import React from 'react'
+import ReactDOM from 'react-dom/client'
+import App from './App'
+// Import the Log function from your middleware
+import { Log } from '../../../src/client' 
 
-initLogger({
-  getAccessToken: () => localStorage.getItem("access_token"),
-  baseUrl: "YOUR_EVAL_SERVER_URL", // TODO: Replace with actual URL
-  onError: (err) => console.error("Logging Middleware Error:", err)
-});
+// Log that the app has successfully initialized and mounted
+Log("frontend", "info", "page", "Notification page loaded");
 
-// Now you can use log() globally
+ReactDOM.createRoot(document.getElementById('root')!).render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
+)

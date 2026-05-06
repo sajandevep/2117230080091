@@ -1,4 +1,4 @@
-import { Log } from "../../../src/client";
+import { Log } from "../../../../src/client";
 
 // Mock API delay to demonstrate loading states
 const delay = (ms: number) => new Promise(res => setTimeout(res, ms));

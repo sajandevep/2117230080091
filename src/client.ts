@@ -1,33 +1,18 @@
-import { LogLevel, LogPackage, LogPayload } from "./types";
+// LOGGING_MIDDLEWARE/src/client.ts
+const LOG_URL = "http://20.207.122.201/evaluation-service/logs";
+const ACCESS_TOKEN = import.meta.env.VITE_ACCESS_TOKEN;
 
-const LOG_ENDPOINT = "http://20.207.122.201/evaluation-service/logs";
-const BEARER_TOKEN = "YOUR_TOKEN_HERE"; // Replace with your actual token
-
-export const Log = async (
-  stack: "frontend",
-  level: LogLevel,
-  pkg: LogPackage,
-  message: string
-) => {
-  const payload: LogPayload = { stack, level, package: pkg, message };
-
-  // Console fallback for local development
-  console.log(`[${level.toUpperCase()}] [${pkg}] ${message}`);
-
+export const Log = async (stack: string, level: string, pkg: string, message: string) => {
   try {
-    const response = await fetch(LOG_ENDPOINT, {
+    await fetch(LOG_URL, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${BEARER_TOKEN}`
+        "Authorization": `Bearer ${ACCESS_TOKEN}`
       },
-      body: JSON.stringify(payload),
+      body: JSON.stringify({ stack, level, package: pkg, message })
     });
-
-    if (!response.ok) {
-      console.warn("Logging middleware failed to reach server:", response.statusText);
-    }
-  } catch (error) {
-    console.error("Logging middleware Error:", error);
+  } catch (err) {
+    console.error("Logging Error:", err);
   }
 };
