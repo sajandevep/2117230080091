@@ -1,26 +1,20 @@
-import React from "react";
-import { CssBaseline, Container, Box, Typography } from "@mui/material";
-import NotificationPage from "./pages/NotificationPage";
-import { Log } from "../../logging_middleware/src";
+import { CssBaseline, ThemeProvider, createTheme } from '@mui/material';
+import { NotificationPage } from './pages/NotificationPage';
 
-const App: React.FC = () => {
-  React.useEffect(() => {
-    Log("info", "page", "Notification app shell mounted");
-  }, []);
+const theme = createTheme({
+  palette: {
+    primary: { main: '#1976d2' },
+    background: { default: '#f8f9fa' }
+  }
+});
 
+function App() {
   return (
-    <>
+    <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Container maxWidth="md">
-        <Box sx={{ mt: 4, mb: 4 }}>
-          <Typography variant="h4" component="h1" gutterBottom>
-            Notification Center
-          </Typography>
-          <NotificationPage />
-        </Box>
-      </Container>
-    </>
+      <NotificationPage />
+    </ThemeProvider>
   );
-};
+}
 
 export default App;

@@ -1,32 +1,33 @@
-// Partial implementation - To be completed by you
-export class LogClient {
-  constructor(private options: LoggerOptions) {}
+import { LogLevel, LogPackage, LogPayload } from "./types";
 
-  async send(payload: LogPayload) {
-    try {
-      const token = this.options.getAccessToken();
-      if (!token) throw new Error("No access token available");
+const LOG_ENDPOINT = "http://20.207.122.201/evaluation-service/logs";
+const BEARER_TOKEN = "YOUR_TOKEN_HERE"; // Replace with your actual token
 
-      const controller = new AbortController();
-      const id = setTimeout(() => controller.abort(), this.options.timeoutMs || 5000);
+export const Log = async (
+  stack: "frontend",
+  level: LogLevel,
+  pkg: LogPackage,
+  message: string
+) => {
+  const payload: LogPayload = { stack, level, package: pkg, message };
 
-      const response = await fetch(`${this.options.baseUrl}/evaluation-service/logs`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        },
-        body: JSON.stringify(payload),
-        signal: controller.signal
-      });
+  // Console fallback for local development
+  console.log(`[${level.toUpperCase()}] [${pkg}] ${message}`);
 
-      clearTimeout(id);
+  try {
+    const response = await fetch(LOG_ENDPOINT, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${BEARER_TOKEN}`
+      },
+      body: JSON.stringify(payload),
+    });
 
-      if (!response.ok) {
-        // TODO: Handle non-2xx responses (e.g., 401, 429)
-      }
-    } catch (err) {
-      this.options.onError?.(err);
+    if (!response.ok) {
+      console.warn("Logging middleware failed to reach server:", response.statusText);
     }
+  } catch (error) {
+    console.error("Logging middleware Error:", error);
   }
-}
+};

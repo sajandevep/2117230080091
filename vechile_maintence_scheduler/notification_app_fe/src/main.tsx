@@ -1,11 +1,9 @@
-// main.tsx snippet
 import { initLogger } from '../../logging_middleware/src';
 
-const logger = initLogger({
-  getAccessToken: () => localStorage.getItem('access_token'), 
-  baseUrl: 'https://api.evalserver.com', // Replace with actual URL
-  onError: (err) => console.error("Logging failed:", err)
+initLogger({
+  getAccessToken: () => localStorage.getItem("access_token"),
+  baseUrl: "YOUR_EVAL_SERVER_URL", // TODO: Replace with actual URL
+  onError: (err) => console.error("Logging Middleware Error:", err)
 });
 
-// Log app start
-logger.log("info", "middleware", "Frontend application initialized");
+// Now you can use log() globally

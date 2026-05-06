@@ -1,59 +1,40 @@
-import React from "react";
-import {
-  List,
-  ListItem,
-  ListItemText,
-  Chip,
-  Stack as MuiStack,
-} from "@mui/material";
-import { Log } from "../../../logging_middleware/src";
+import React, { useEffect } from 'react';
+import { List, ListItem, ListItemText, Paper, Typography, Chip, Divider } from '@mui/material';
+import { Log } from '../../../src/client';
 
-interface Notification {
-  id: string;
-  title: string;
-  message: string;
-  enabled: boolean;
-}
-
-const mockNotifications: Notification[] = [
-  {
-    id: "1",
-    title: "Daily summary",
-    message: "Your daily summary is ready",
-    enabled: true,
-  },
-  {
-    id: "2",
-    title: "Promo",
-    message: "Special offer ends today",
-    enabled: false,
-  },
-];
-
-const NotificationList: React.FC = () => {
-  const [items, setItems] = React.useState<Notification[]>([]);
-
-  React.useEffect(() => {
-    Log("info", "component", "NotificationList mounted");
-    setItems(mockNotifications);
-    Log("debug", "state", "Notifications loaded into state");
+export const NotificationList = ({ items }: { items: any[] }) => {
+  useEffect(() => {
+    Log("frontend", "info", "component", "Notification list mounted");
   }, []);
 
+  if (items.length === 0) {
+    return (
+      <Paper sx={{ p: 4, textAlign: 'center', bgcolor: '#f5f5f5' }}>
+        <Typography color="textSecondary">No notifications yet.</Typography>
+      </Paper>
+    );
+  }
+
   return (
-    <List>
-      {items.map((n) => (
-        <ListItem key={n.id} disableGutters>
-          <ListItemText primary={n.title} secondary={n.message} />
-          <MuiStack direction="row" spacing={1}>
-            <Chip
-              label={n.enabled ? "Enabled" : "Disabled"}
-              color={n.enabled ? "success" : "default"}
-            />
-          </MuiStack>
-        </ListItem>
-      ))}
-    </List>
+    <Paper elevation={3}>
+      <List>
+        {items.map((item, index) => (
+          <React.Fragment key={item.id}>
+            <ListItem alignItems="flex-start">
+              <ListItemText
+                primary={item.title}
+                secondary={item.message}
+              />
+              <Chip 
+                label={item.enabled ? "Active" : "Disabled"} 
+                color={item.enabled ? "success" : "default"} 
+                size="small" 
+              />
+            </ListItem>
+            {index < items.length - 1 && <Divider />}
+          </React.Fragment>
+        ))}
+      </List>
+    </Paper>
   );
 };
-
-export default NotificationList;
